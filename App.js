@@ -1,17 +1,43 @@
+import { useState } from 'react';
 import {View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const App = () => {
+
+  const [newTarea, setNewTarea] = useState ({
+    titulo:"",
+    descripcion:""
+  })
+  const [tareas, setTarea] = useState([])
+
+  const addTarea = () => {
+    setTarea ([...tareas, newTarea])
+    setNewTarea({
+      titulo:"",
+      descripcion:""
+    })
+  }
+
+  const onHandlerTitulo = (t) => {
+    setNewTarea ({...newTarea, titulo:t})
+  }
+  
+  const onHandlerDescripcion = (t) => {
+    setNewTarea ({...newTarea, descripcion:t})
+  }
+
+
   return (
     <View style={styles.containerPadre}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.input} placeholder='Ingresar tarea' />
-        <Button title='Add' />
+        <TextInput value={newTarea.titulo} onChangeText={onHandlerTitulo} style={styles.input} placeholder='Ingresar titulo' />
+        <TextInput value={newTarea.descripcion} onChangeText={onHandlerDescripcion} style={styles.input} placeholder='Ingresar descripcion' />
+        <Button title='Add' onPress={addTarea} />
       </View>
 
       <View style={styles.cardsContainer}>
         <View style={styles.tarjetaProd}>
           <Text style={styles.texto}>Tarea 1</Text>
-          <Button title='Delete'/>
+          <Button title='Delete' />
         </View>
         
         <View style={styles.tarjetaProd}>
@@ -39,7 +65,7 @@ const styles = StyleSheet.create({
   },
 
   inputContainer:{
-    flexDirection:"row",
+    flexDirection:"",
     alignItems:"center",
     justifyContent:"space-around",
     
