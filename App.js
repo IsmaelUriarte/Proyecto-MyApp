@@ -1,30 +1,45 @@
 import { useState } from 'react';
-import {View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, ScrollView, FlatList, Modal } from 'react-native';
+import uuid from 'react-native-uuid'
 
 const App = () => {
 
+  const [modalVisible, setModalVisible] = useState(false)
+  const [idSelected, setIdSelected] = useState("")
   const [newTarea, setNewTarea] = useState ({
     titulo:"",
-    descripcion:""
+    descripcion:"",
+    id:""
   })
-  const [tareas, setTarea] = useState([])
+  const [tareas, setTareas] = useState([])
 
   const addTarea = () => {
-    setTarea ([...tareas, newTarea])
+    setTareas ([...tareas, newTarea])
     setNewTarea({
       titulo:"",
-      descripcion:""
+      descripcion:"",
+      id:""
     })
   }
 
   const onHandlerTitulo = (t) => {
-    setNewTarea ({...newTarea, titulo:t})
+    const id = uuid.v4()
+    setNewTarea ({...newTarea, titulo:t, id})
   }
   
   const onHandlerDescripcion = (t) => {
     setNewTarea ({...newTarea, descripcion:t})
   }
 
+  const onHandlerModal = (id) => {
+    setIdSelected(id)
+    setModalVisible (true)
+    
+  }
+
+  const deleteTarea = (id) => {
+    setTareas (tareas.filter (tarea => tarea.id != idSelected))
+  }
 
   return (
     <View style={styles.containerPadre}>
@@ -35,21 +50,47 @@ const App = () => {
       </View>
 
       <View style={styles.cardsContainer}>
-        <View style={styles.tarjetaProd}>
-          <Text style={styles.texto}>Tarea 1</Text>
-          <Button title='Delete' />
-        </View>
-        
-        <View style={styles.tarjetaProd}>
-          <Text style={styles.texto}>Tarea 2</Text>
-          <Button title='Delete'/>
-        </View>
+        <FlatList
+          data={tareas}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+                                    <View style={styles.tarjetaProd}>
+                                      <Text style={styles.texto}>{item.titulo}</Text>
+                                      <Button title='Delete' onPress={() => onHandlerModal(item.id)} />
+                                    </View>
+          )}
+        />
 
-        <View style={styles.tarjetaProd}>
-          <Text style={styles.texto}>Tarea 3</Text>
-          <Button title='Delete'/>
-        </View>
+        <Modal
+        visible={modalVisible}
+        >
+          
+          <View>
+            <Text>Deseas eliminar esta tarea?</Text>
+            <Button title='si' onPress={()=> {
+              deleteTarea()
+              setModalVisible(false)
+          }} />
+            <Button title='no' onPress={()=> setModalVisible(false)}/>
+          </View>
+        </Modal>
+
       </View>
+      
+      {/*<ScrollView style={styles.cardsContainer}>
+        
+        {
+          tareas.map( tarea => (  <View key={tarea.id} style={styles.tarjetaProd}>
+                                    <Text style={styles.texto}>{tarea.titulo}</Text>
+                                    <Button title='Delete'/>
+                                  </View>
+            
+          )
+
+          )
+        }
+        
+      </ScrollView>*/}
       
     </View>
   );
@@ -86,10 +127,9 @@ const styles = StyleSheet.create({
   },
 
   cardsContainer:{
-    alignItems:"center",
     gap:25,
     padding:10,
-    marginTop:20
+    
   },
 
   tarjetaProd:{
@@ -97,6 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#204D79",
     padding:10,
     alignItems:"center",
-    borderRadius:10
+    borderRadius:10,
+    marginTop:20
   },
 })
