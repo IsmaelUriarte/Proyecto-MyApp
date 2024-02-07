@@ -1,51 +1,57 @@
 import { useState } from 'react';
 import {View, Text, TextInput, Button, StyleSheet, ScrollView, FlatList, Modal } from 'react-native';
 import uuid from 'react-native-uuid'
+import ModalDeleteTarea from './src/components/ModalDeleteTarea';
 
 const App = () => {
 
   const [modalVisible, setModalVisible] = useState(false)
-  const [idSelected, setIdSelected] = useState("")
-  const [newTarea, setNewTarea] = useState ({
-    titulo:"",
-    descripcion:"",
-    id:""
-  })
+  const [TareaSelected, setTareaSelected] = useState({})
+  const [tareaTitulo, setTareaTitulo] = useState ("")
+  const [tareaDescripcion, setTareaDescripcion] = useState ("")
   const [tareas, setTareas] = useState([])
 
   const addTarea = () => {
-    setTareas ([...tareas, newTarea])
-    setNewTarea({
-      titulo:"",
-      descripcion:"",
-      id:""
-    })
+
+    const newTarea = {
+      id: uuid.v4(),
+      createAt: new Date().toLocaleString(),
+      updateAt: new Date().toLocaleString(),
+      titulo:tareaTitulo,
+      descripcion:tareaDescripcion
+    }
+
+    
+    setTareas([...tareas, newTarea])
+    setTareaTitulo("")
+    setTareaDescripcion("")
   }
 
   const onHandlerTitulo = (t) => {
-    const id = uuid.v4()
-    setNewTarea ({...newTarea, titulo:t, id})
+    // const id = uuid.v4();
+    setTareaTitulo(t)
   }
   
   const onHandlerDescripcion = (t) => {
-    setNewTarea ({...newTarea, descripcion:t})
+    setTareaDescripcion(t)
   }
 
-  const onHandlerModal = (id) => {
-    setIdSelected(id)
-    setModalVisible (true)
+  const onHandlerModal = (tarea) => {
+    setTareaSelected(tarea)
+    setModalVisible (!modalVisible)
     
   }
 
-  const deleteTarea = (id) => {
-    setTareas (tareas.filter (tarea => tarea.id != idSelected))
+  const deleteTarea = () => {
+    setTareas (tareas.filter (tarea => tarea.id != TareaSelected.id))
+    setModalVisible(!modalVisible)
   }
 
   return (
     <View style={styles.containerPadre}>
       <View style={styles.inputContainer}>
-        <TextInput value={newTarea.titulo} onChangeText={onHandlerTitulo} style={styles.input} placeholder='Ingresar titulo' />
-        <TextInput value={newTarea.descripcion} onChangeText={onHandlerDescripcion} style={styles.input} placeholder='Ingresar descripcion' />
+        <TextInput value={tareaTitulo} onChangeText={onHandlerTitulo} style={styles.input} placeholder='Ingresar titulo' />
+        <TextInput value={tareaDescripcion} onChangeText={onHandlerDescripcion} style={styles.input} placeholder='Ingresar descripcion' />
         <Button title='Add' onPress={addTarea} />
       </View>
 
@@ -60,22 +66,14 @@ const App = () => {
                                     </View>
           )}
         />
-
-        <Modal
-        visible={modalVisible}
-        >
-          
-          <View>
-            <Text>Deseas eliminar esta tarea?</Text>
-            <Button title='si' onPress={()=> {
-              deleteTarea()
-              setModalVisible(false)
-          }} />
-            <Button title='no' onPress={()=> setModalVisible(false)}/>
-          </View>
-        </Modal>
-
       </View>
+
+      <ModalDeleteTarea
+        modalVisible={modalVisible}
+        TareaSelected={TareaSelected}
+        deleteTarea={deleteTarea}
+        onHandlerModal={onHandlerModal}
+      />
       
       {/*<ScrollView style={styles.cardsContainer}>
         
