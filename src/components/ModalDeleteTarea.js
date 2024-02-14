@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native'
 
-const ModalDeleteTarea = (prop) => {
-    const {TareaSelected, deleteTarea, onHandlerModal, modalVisible} = prop
+const ModalDeleteTarea = ({tareaSelected, 
+                            deleteTarea, 
+                            onHandlerModal, 
+                            modalVisible}) => {
+
   return (
         <Modal
         visible={modalVisible}
+        animationType='fade'
+        onRequestClose={()=> onHandlerModal({})}
         >
           <View>
-            <Text>Deseas eliminar esta tarea? : {TareaSelected.titulo}</Text>
+            <Text>Deseas eliminar esta tarea? : {tareaSelected.titulo}</Text>
             <Button title='si' onPress={deleteTarea} />
             <Button title='no' onPress={()=> onHandlerModal({})}/>
           </View>
@@ -17,4 +22,6 @@ const ModalDeleteTarea = (prop) => {
 
 export default ModalDeleteTarea
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  
+})
