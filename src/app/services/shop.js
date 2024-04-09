@@ -2,20 +2,20 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const shopApi = createApi({
     reducerPath:"shopApi",
-    baseQuery:fetchBaseQuery({baseUrl:"https://cursodapp-default-rtdb.firebaseio.com"}),
+    baseQuery:fetchBaseQuery({baseUrl:"https://dummyjson.com"}),
     endpoints:(builder)=>({
         getProductsByCategory:builder.query({
-            query: (category) => `/products.json?orderBy="category"&equalTo="${category}"`,
+            query: (category) => `/products/category/${category}`,
             transformResponse:(response)=>{
-                const data = Object.values(response)
+                const data = response['products']
                 return data
             }
         }),
         getCategories: builder.query({
-            query: () => "/categories.json"
+            query: () => "/products/categories"
         }),
         getProduct:builder.query({
-            query:(id) => `/products/${id}.json`
+            query:(id) => `/products/${id}`
         })
     })
 })

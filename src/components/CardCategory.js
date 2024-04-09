@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View,ImageBackground} from 'react-native'
 import ShadowPrimary from './wrappers/ShadowPrimary'
 import colors from '../utils/globals/colors'
 import fonts from '../utils/globals/fonts'
@@ -7,7 +7,9 @@ const CardCategory = ({item,navigation}) => {
   return (
     <Pressable onPress={()=>navigation.navigate("ProductsByCategory",{categorySelected:item})}>
       <ShadowPrimary style={styles.container}>
-          <Text style={styles.text}>{item}</Text>
+          <ImageBackground source={{uri:item.thumbnail}} style={styles.background}>
+            <Text style={styles.text}>{item}</Text>
+          </ImageBackground>
       </ShadowPrimary>
     </Pressable>
   )
@@ -17,20 +19,24 @@ export default CardCategory
 
 const styles = StyleSheet.create({
     container:{
-        width:"80%",
-        backgroundColor:"#527452",
-        marginHorizontal:"10%",
+        width:150,
+        height:100,
+        backgroundColor:colors.green2,
+        marginHorizontal:10,
         marginVertical:10,
-        padding:20,
-        alignItems:"center",
         borderRadius:5,
-        
-        shadowColor:"#000"
-        
+        overflow:"hidden"
+    },
+    background:{
+      width:"100%",
+      height:"100%",
+      resizeMode:"cover",
+      alignItems:"center",
+      justifyContent:"center"
     },
     text:{
-        fontSize:17,
-        fontWeight:"bold",
-        fontFamily:fonts.JosefinSansBold
+        fontSize:16,
+        fontFamily:fonts.JosefinSansBold,
+        color:"white"
     }
 })

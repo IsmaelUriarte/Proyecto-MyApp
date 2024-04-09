@@ -37,10 +37,10 @@ const Search = ({handlerKeyword}) => {
             style={styles.input}
         />
         <Pressable onPress={search}>
-            <AntDesign name='search1' size={28} color="#CAD2C5" marginHorizontal={10}/>
+            <AntDesign name='search1' size={30} color="black"/>
         </Pressable>
         <Pressable onPress={resetSearch}>
-            <AntDesign name='closecircle' size={28} color="#CAD2C5"/>
+            <AntDesign name='closecircle' size={30} color="black"/>
         </Pressable>
         </View>
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
@@ -52,7 +52,7 @@ export default Search
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:colors.green3,
+        backgroundColor:colors.green1,
         flexDirection:"row",
         padding:10,
         alignItems:"center"
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     input:{
         flex:1,
         borderWidth:2,
-        borderColor:"#CAD2C5",
         paddingHorizontal:10,
         paddingVertical:5,
         borderRadius:5

@@ -14,7 +14,7 @@ const Profile = ({navigation}) => {
             style={styles.image}
             resizeMode='cover'
         />
-        <Text style={styles.text}>{locationFormatted.address}</Text>
+        <Text style={styles.text}>{locationFormatted?.address}</Text>
         <AddButton title={"Agregar Imagen de perfil"} onPress={()=> navigation.navigate("ImageSelector")}/>
         <AddButton title={"Agregar Direccion"} onPress={()=> navigation.navigate("LocationSelector")}/>
     </View>

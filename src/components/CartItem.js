@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
         margin:10,
         borderWidth:2,
         borderRadius:10,
-        borderColor:"#CAD2C5",
         flexDirection:"row",
         justifyContent:"space-between",
         height:140,
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     },
     text2:{
         color:colors.lightGray,
-        fontSize:15,
+        fontSize:14,
         fontFamily:fonts.JosefinSansBold
     }
 })

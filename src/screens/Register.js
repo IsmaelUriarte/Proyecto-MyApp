@@ -8,6 +8,7 @@ import { useRegisterMutation } from '../app/services/auth'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../features/auth/authSlice'
 import { registerSchema } from '../utils/validations/authSchema'
+import { deleteSession, insertSession } from '../utils/db'
 
 const Register = ({navigation}) => {
 
@@ -24,7 +25,12 @@ const Register = ({navigation}) => {
     const onSubmit = async () => {
       try {
         registerSchema.validateSync({email,password,confirmPassword})
-        const {data} = await  triggerRegister({email,password})
+        const {data,error} = await  triggerRegister({email,password})
+        if(error){
+          console.log(error)
+        }
+        deleteSession()
+        insertSession(data)
         dispatch(setUser({email:data.email,idToken:data.idToken,localId:data.localId}))
       } catch (error) {
         setErrorEmail("")

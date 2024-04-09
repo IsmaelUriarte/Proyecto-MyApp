@@ -1,30 +1,30 @@
-import { Pressable, StyleSheet, Text,} from 'react-native'
-import React from 'react'
+import { StyleSheet, Text,Pressable } from 'react-native'
+import colors from '../utils/globals/colors'
 
-const ButtonPrimary = ({titulo, onPress}) => {
+
+const ButtonPrimary = ({title,onPress,style={}}) => {
   return (
-    <Pressable style={styles.boton} onPress={onPress}>
-      <Text style={styles.text}>{titulo}</Text>
+    <Pressable style={[style,styles.container]} onPress={onPress}>
+        <Text style={styles.text}>{title}</Text>
     </Pressable>
   )
 }
 
+
 export default ButtonPrimary
 
-const styles = StyleSheet.create({
-  boton:{
-    marginTop:10,
-    marginBottom:20,
-    backgroundColor:"#AFB796",
-    padding:10,
-    borderRadius:10,
-    width:"80%",
-    alignItems:"center",
-    
-  },
 
-  text:{
-    color:"black",
-    fontSize:16,
-  }
+const styles = StyleSheet.create({
+    container:{
+        backgroundColor:colors.green3,
+        paddingHorizontal:10,
+        paddingVertical:8,
+        margin:10,
+        borderRadius:5
+    },
+    text:{
+        color:"white",
+        textAlign:"center",
+        fontSize:18
+    }
 })

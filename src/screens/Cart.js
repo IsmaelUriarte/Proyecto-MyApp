@@ -36,7 +36,7 @@ const Cart = ({navigation}) => {
             <Pressable onPress={handlerAddOrder}>
                 <Text style={styles.confirmText}>Confirmar</Text>
             </Pressable>
-            <Text style={styles.confirmTotal}>Total: $ {cart.total}</Text>
+            <Text style={styles.confirmText}>Total: $ {cart.total}</Text>
         </View>
     </View>
   )
@@ -52,25 +52,13 @@ const styles = StyleSheet.create({
     },
     confirmContainer:{
         flexDirection:"row",
-        backgroundColor:"#cccccc",
+        backgroundColor:"gray",
         padding:25,
         justifyContent:"space-between",
     },
     confirmText:{
-        borderRadius:5,
-        backgroundColor:"#BABABA",
         fontFamily:fonts.PlayfairDisplaySCRegular,
-        fontSize:20,
-        color:"white",
-        fontWeight:"bold",
-        paddingVertical:3.5,
-        paddingHorizontal:5,
-    },
-
-    confirmTotal:{
-        fontFamily:fonts.PlayfairDisplaySCRegular,
-        fontSize:21,
-        color:"white",
-        fontWeight:"bold",
+        fontSize:18,
+        color:"white"
     }
 })
